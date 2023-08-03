@@ -1,0 +1,101 @@
+.jobs-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #000000;
+  padding-bottom: 15px;
+}
+.filter-search-container {
+  display: flex;
+  flex-direction: column;
+}
+.search-input {
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  width: 95%;
+}
+.search-input-container {
+  border: 1px solid #64748b;
+  border-radius: 3px;
+  height: 30px;
+  padding: 15px;
+  background: transparent;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  width: 60%;
+  margin-bottom: 20px;
+}
+.hr-line {
+  width: 100%;
+  margin-top: 20px;
+}
+.employment-heading {
+  color: #f1f5f9;
+  font-size: 16px;
+}
+.filter-types-options-container {
+  display: flex;
+  flex-direction: column;
+}
+.filter-option-container {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  width: 100px;
+}
+.filter-option-label {
+  color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.filter-option-container-salary {
+  width: 165px;
+}
+.job-details-container {
+  display: flex;
+  flex-direction: column;
+}
+.details-lg-search-input {
+  display: none;
+}
+.no-job-view-container {
+  padding: 30px;
+  text-align: center;
+}
+.no-job-img {
+  width: 90%;
+}
+.no-jobs-heading {
+  color: #ffffff;
+}
+.retry-btn {
+  background: #4f46e5;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 100px;
+}
+.failure-view-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+.link-styles {
+  text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+  .jobs-container {
+    flex-direction: row;
+  }
+  .filter-lg-search-input {
+    display: none;
+  }
+  .details-lg-search-input {
+    display: flex;
+  }
+}

@@ -1,0 +1,147 @@
+.job-item-details-container {
+  background: #000000;
+  padding: 30px;
+  padding-bottom: 50px;
+  padding-top: 30px;
+}
+.job-item-detail-container {
+  background: #202020;
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+.title-container {
+  display: flex;
+}
+.logo-img {
+  height: 60px;
+  width: 60px;
+  margin-right: 15px;
+}
+.title-heading {
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 22px;
+}
+.rating-icon {
+  color: #fbbf24;
+  margin-right: 10px;
+}
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-top: -17px;
+}
+.location-job-type-container {
+  display: flex;
+  justify-content: space-between;
+}
+.location-container {
+  display: flex;
+  align-items: center;
+  min-width: 115px;
+}
+.icon {
+  color: #ffffff;
+  margin-right: 5px;
+}
+.location-para {
+  color: #ffffff;
+  font-size: 16px;
+}
+.description-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.hr-line {
+  width: 100%;
+}
+.visit-link {
+  text-decoration: none;
+}
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+.skill-item-container {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  margin: 25px;
+}
+.skill-img {
+  height: 50px;
+}
+.skill-name {
+  color: #ffffff;
+  padding-left: 12px;
+}
+.life-at-company-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.no-job-view-container {
+  padding: 30px;
+  text-align: center;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.no-job-img {
+  width: 90%;
+}
+.no-jobs-heading {
+  color: #ffffff;
+}
+.retry-btn {
+  background: #4f46e5;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 100px;
+}
+.failure-view-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+.life-at-company-img {
+  height: 230px;
+  width: 400px;
+  margin-top: 20px;
+}
+.loader-container {
+  background: #000000;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.similar-jobs-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.similar-job-item {
+  background: #202020;
+  border-radius: 10px;
+  padding: 30px;
+  list-style-type: none;
+  max-width: 300px;
+  margin: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .life-at-company-description {
+    max-width: 60%;
+  }
+  .life-at-company-img {
+    margin-top: 0px;
+  }
+}

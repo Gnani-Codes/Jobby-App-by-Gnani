@@ -1,0 +1,55 @@
+* {
+  font-family: 'Roboto';
+}
+.job-item-container {
+  list-style-type: none;
+  background: #202020;
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+.title-container {
+  display: flex;
+}
+.logo-img {
+  height: 60px;
+  width: 60px;
+  margin-right: 15px;
+}
+.title-heading {
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 16px;
+}
+.rating-icon {
+  color: #fbbf24;
+  margin-right: 10px;
+}
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+.location-job-type-container {
+  display: flex;
+  justify-content: space-between;
+}
+.location-container {
+  display: flex;
+  align-items: center;
+  min-width: 115px;
+}
+.icon {
+  color: #ffffff;
+  margin-right: 5px;
+}
+.location-para {
+  color: #ffffff;
+  font-size: 16px;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.hr-line {
+  width: 100%;
+}
