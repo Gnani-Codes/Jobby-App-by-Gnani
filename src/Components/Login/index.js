@@ -37,7 +37,7 @@ class Login extends Component {
   onSubmitForm = async event => {
     event.preventDefault()
     const {inputUsername, inputPassword} = this.state
-    console.log(inputUsername, inputPassword)
+
     const userDetails = {
       username: inputUsername,
       password: inputPassword,
@@ -47,9 +47,10 @@ class Login extends Component {
       method: 'POST',
       body: JSON.stringify(userDetails),
     }
+
     const response = await fetch(url, options)
     const data = await response.json()
-    console.log(data)
+
     if (response.ok) {
       this.setState({errorMsg: ''})
       this.onSuccess(data.jwt_token)
