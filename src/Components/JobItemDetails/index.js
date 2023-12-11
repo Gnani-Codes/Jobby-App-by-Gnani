@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import './index.css'
-import {Loader} from 'react-loader-spinner'
+import Loader from 'react-loader-spinner'
 import {AiFillStar} from 'react-icons/ai'
 import {HiLocationMarker} from 'react-icons/hi'
 import {Component} from 'react'
@@ -26,6 +26,10 @@ class JobItemDetails extends Component {
   }
 
   getJobItemDetails = async () => {
+    this.setState({
+      renderStatus: renderStatusObj.isLoader,
+    })
+
     const {match} = this.props
     const {id} = match.params
 
@@ -118,12 +122,16 @@ class JobItemDetails extends Component {
       <div className="job-item-details-container">
         <div className="job-item-detail-container">
           <div className="title-container">
-            <img src={companyLogoUrl} alt="logo" className="logo-img" />
+            <img
+              src={companyLogoUrl}
+              alt="job details company logo"
+              className="logo-img"
+            />
             <div>
               <h1 className="title-heading">{title}</h1>
               <div className="rating-container">
                 <AiFillStar className="rating-icon" />
-                <h1 className="title-heading">{rating}</h1>
+                <p className="title-heading">{rating}</p>
               </div>
             </div>
           </div>
@@ -147,7 +155,12 @@ class JobItemDetails extends Component {
           <hr className="hr-line" />
           <div className="description-container">
             <h1 className="title-heading">Description</h1>
-            <a href={companyWebsiteUrl} className="visit-link">
+            <a
+              href={companyWebsiteUrl}
+              className="visit-link"
+              target="_blank"
+              rel="noreferrer"
+            >
               Visit
               <span>
                 <FiExternalLink />
@@ -160,7 +173,7 @@ class JobItemDetails extends Component {
 
           <ul className="skills-container">
             {skills.map(obj => (
-              <li className="skill-item-container" key={obj.id}>
+              <li className="skill-item-container" key={obj.name}>
                 <img src={obj.imageUrl} alt={obj.name} className="skill-img" />
                 <p className="skill-name">{obj.name}</p>
               </li>
@@ -174,7 +187,7 @@ class JobItemDetails extends Component {
             </div>
             <img
               src={lifeAtCompanyImg}
-              alt={title}
+              alt="life at company"
               className="life-at-company-img"
             />
           </div>
@@ -186,12 +199,16 @@ class JobItemDetails extends Component {
           {similarJobsData.map(obj => (
             <li className="similar-job-item" key={obj.id}>
               <div className="title-container">
-                <img src={obj.companyLogoUrl} alt="logo" className="logo-img" />
+                <img
+                  src={obj.companyLogoUrl}
+                  alt="similar job company logo"
+                  className="logo-img"
+                />
                 <div>
                   <h1 className="title-heading">{obj.title}</h1>
                   <div className="rating-container">
                     <AiFillStar className="rating-icon" />
-                    <h1 className="title-heading">{obj.rating}</h1>
+                    <p className="title-heading">{obj.rating}</p>
                   </div>
                 </div>
               </div>
@@ -216,6 +233,10 @@ class JobItemDetails extends Component {
     )
   }
 
+  onClickRetryBtn = () => {
+    this.getJobItemDetails()
+  }
+
   renderJobItemFailureView = () => (
     <div className="no-job-view-container">
       <div className="failure-view-display-container">
@@ -226,9 +247,13 @@ class JobItemDetails extends Component {
         />
         <h1 className="no-jobs-heading">Oops! Something Went Wrong</h1>
         <p className="no-jobs-heading">
-          We cannot Seem to find the page you are looking for.
+          We cannot seem to find the page you are looking for
         </p>
-        <button type="button" className="retry-btn">
+        <button
+          type="button"
+          className="retry-btn"
+          onClick={this.onClickRetryBtn}
+        >
           Retry
         </button>
       </div>
@@ -244,7 +269,7 @@ class JobItemDetails extends Component {
       case renderStatusObj.failure:
         return this.renderJobItemFailureView()
       case renderStatusObj.isLoader:
-        return this.renderLoadingView
+        return this.renderLoadingView()
       default:
         return null
     }

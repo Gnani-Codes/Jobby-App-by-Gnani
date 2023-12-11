@@ -1,11 +1,8 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {HiSearch} from 'react-icons/hi'
-import {Link} from 'react-router-dom'
 
 import './index.css'
 import Header from '../Header'
-import JobItem from '../JobItem'
 import ProfileCard from '../ProfileCard'
 
 const employmentTypesList = [
@@ -46,12 +43,6 @@ const salaryRangesList = [
   },
 ]
 
-const conditionsOfJobsRoute = {
-  Success: 'SUCCESS',
-  failure: 'FAILURE',
-  noJobs: 'NOJOBS',
-}
-
 class Jobs extends Component {
   state = {
     typesOfEmployment: employmentTypesList,
@@ -60,7 +51,6 @@ class Jobs extends Component {
     minPackage: [],
     inputSearchValue: '',
     jobsData: [],
-    currentJobRouteCondition: conditionsOfJobsRoute.Success,
   }
 
   componentDidMount() {
@@ -71,7 +61,6 @@ class Jobs extends Component {
     const {employmentType, minPackage, inputSearchValue} = this.state
     const employParameters = employmentType.join(',')
     const url = `https://apis.ccbp.in/jobs?employmennt_type=${employParameters}&minimum_package=${minPackage}&search=${inputSearchValue}`
-    console.log(url, 'url')
     const jwtToken = Cookies.get('jwt_token')
 
     const options = {
@@ -82,37 +71,21 @@ class Jobs extends Component {
     }
     const response = await fetch(url, options)
     const data = await response.json()
+    const {jobs} = data
+    const updatedData = jobs.map(obj => ({
+      companyLogoUrl: obj.company_logo_url,
+      employmentType: obj.employment_type,
+      id: obj.id,
+      jobDescription: obj.job_description,
+      location: obj.location,
+      packagePerAnnum: obj.package_per_annum,
+      rating: obj.rating,
+      title: obj.title,
+    }))
 
-    if (response.ok) {
-      const {jobs} = data
-      console.log(jobs, 'data')
-      if (jobs.length === 0) {
-        console.log('no jobs')
-        this.setState({
-          currentJobRouteCondition: conditionsOfJobsRoute.noJobs,
-        })
-      } else {
-        const updatedData = jobs.map(obj => ({
-          companyLogoUrl: obj.company_logo_url,
-          employmentType: obj.employment_type,
-          id: obj.id,
-          jobDescription: obj.job_description,
-          location: obj.location,
-          packagePerAnnum: obj.package_per_annum,
-          rating: obj.rating,
-          title: obj.title,
-        }))
-
-        this.setState({
-          jobsData: updatedData,
-          currentJobRouteCondition: conditionsOfJobsRoute.Success,
-        })
-      }
-    } else {
-      this.setState({
-        currentJobRouteCondition: conditionsOfJobsRoute.failure,
-      })
-    }
+    this.setState({
+      jobsData: updatedData,
+    })
   }
 
   onFilterSalary = event => {
@@ -131,102 +104,9 @@ class Jobs extends Component {
 
   onChangeSearchInput = event => {
     if (event.key === 'Enter') {
-      this.setState(
-        {
-          inputSearchValue: event.target.value,
-        },
-        this.getTypesOfEmployments,
-      )
-    }
-  }
-
-  renderJobDetailsView = () => {
-    const {jobsData} = this.state
-    return (
-      <ul className="job-details-container">
-        <div className="search-input-container details-lg-search-input">
-          <input
-            type="search"
-            className="search-input "
-            placeholder="Search"
-            onKeyDown={this.onChangeSearchInput}
-          />
-          <HiSearch />
-        </div>
-        {jobsData.map(obj => (
-          <Link to={`/jobs/${obj.id}`} key={obj.id} className="link-styles">
-            <JobItem jobData={obj} />
-          </Link>
-        ))}
-      </ul>
-    )
-  }
-
-  renderNoJobsView = () => (
-    <div className="no-job-view-container">
-      <div className="search-input-container details-lg-search-input">
-        <input
-          type="search"
-          className="search-input"
-          placeholder="Search"
-          onKeyDown={this.onChangeSearchInput}
-        />
-        <HiSearch />
-      </div>
-      <div className="failure-view-display-container">
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
-          alt="no jobs"
-          className="no-job-img"
-        />
-        <h1 className="no-jobs-heading">No Jobs Found</h1>
-        <p className="no-jobs-heading">
-          We could not find any jobs. Try other filters.
-        </p>
-      </div>
-    </div>
-  )
-
-  renderJobFailureView = () => (
-    <div className="no-job-view-container">
-      <div className="search-input-container details-lg-search-input">
-        <input
-          type="search"
-          className="search-input"
-          placeholder="Search"
-          onKeyDown={this.onChangeSearchInput}
-        />
-        <HiSearch />
-      </div>
-      <div className="failure-view-display-container">
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
-          alt="failure view"
-          className="no-job-img"
-        />
-        <h1 className="no-jobs-heading">Oops! Something Went Wrong</h1>
-        <p className="no-jobs-heading">
-          We cannot Seem to find the page you are looking for.
-        </p>
-        <button type="button" className="retry-btn">
-          Retry
-        </button>
-      </div>
-    </div>
-  )
-
-  renderJobs = () => {
-    const {currentJobRouteCondition} = this.state
-
-    switch (currentJobRouteCondition) {
-      case conditionsOfJobsRoute.Success:
-        return this.renderJobDetailsView()
-      case conditionsOfJobsRoute.failure:
-        return this.renderJobFailureView()
-      case conditionsOfJobsRoute.noJobs:
-        return this.renderNoJobsView()
-      default:
-        return null
+      this.setState({
+        inputSearchValue: event.target.value,
+      })
     }
   }
 
@@ -237,15 +117,12 @@ class Jobs extends Component {
         <Header />
         <div className="jobs-container">
           <div className="filter-search-container">
-            <div className="search-input-container filter-lg-search-input">
-              <input
-                type="search"
-                className="search-input "
-                placeholder="Search"
-                onKeyDown={this.onChangeSearchInput}
-              />
-              <HiSearch />
-            </div>
+            <input
+              type="search"
+              className="search-input"
+              placeholder="Search"
+              onKeyDown={this.onChangeSearchInput}
+            />
             <ProfileCard />
 
             <hr className="hr-line" />
@@ -302,8 +179,6 @@ class Jobs extends Component {
               </div>
             </div>
           </div>
-
-          {this.renderJobs()}
         </div>
       </>
     )

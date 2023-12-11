@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie'
 import {Component} from 'react'
-import {Redirect} from 'react-router-dom'
 import Header from '../Header'
 
 import './index.css'
@@ -53,7 +52,6 @@ class Login extends Component {
     console.log(data)
     if (response.ok) {
       this.setState({errorMsg: ''})
-
       this.onSuccess(data.jwt_token)
     } else if (data.status_code === 400) {
       this.onFailure(data.error_msg)
@@ -62,10 +60,6 @@ class Login extends Component {
 
   render() {
     const {errorMsg} = this.state
-    const jwtToken = Cookies.get('jwt_token')
-    if (jwtToken !== undefined) {
-      return <Redirect to="/" />
-    }
 
     return (
       <>

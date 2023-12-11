@@ -5,7 +5,6 @@ import Cookies from 'js-cookie'
 class ProfileCard extends Component {
   state = {
     profileDetails: '',
-    profileFailure: true,
   }
 
   componentDidMount() {
@@ -26,33 +25,23 @@ class ProfileCard extends Component {
     const response = await fetch(url, options)
     const data = await response.json()
 
-    if (response.ok) {
-      const updatedData = {
-        name: data.profile_details.name,
-        profileImageUrl: data.profile_details.profile_image_url,
-        shortBio: data.profile_details.short_bio,
-      }
-
-      this.setState({profileDetails: updatedData, profileFailure: true})
-    } else {
-      this.setState({profileFailure: false})
+    const updatedData = {
+      name: data.profile_details.name,
+      profileImageUrl: data.profile_details.profile_image_url,
+      shortBio: data.profile_details.short_bio,
     }
+
+    this.setState({profileDetails: updatedData})
   }
 
   render() {
-    const {profileDetails, profileFailure} = this.state
+    const {profileDetails} = this.state
     const {name, profileImageUrl, shortBio} = profileDetails
-    return profileFailure ? (
+    return (
       <div className="profile-container">
         <img src={profileImageUrl} alt="profile" className="profile-img" />
         <h1 className="profile-name">{name}</h1>
         <p className="profile-bio">{shortBio}</p>
-      </div>
-    ) : (
-      <div className="profile-failure-container">
-        <button type="button" className="retry-btn">
-          Retry
-        </button>
       </div>
     )
   }

@@ -19,12 +19,12 @@ const JobItem = props => {
   return (
     <li className="job-item-container">
       <div className="title-container">
-        <img src={companyLogoUrl} alt="logo" className="logo-img" />
+        <img src={companyLogoUrl} alt="company logo" className="logo-img" />
         <div>
           <h1 className="title-heading">{title}</h1>
           <div className="rating-container">
             <AiFillStar className="rating-icon" />
-            <h1 className="title-heading">{rating}</h1>
+            <p className="title-heading">{rating}</p>
           </div>
         </div>
       </div>
