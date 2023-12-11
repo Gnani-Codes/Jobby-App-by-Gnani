@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {BsSearch} from 'react-icons/bs'
+import Loader from 'react-loader-spinner'
 
 import './index.css'
 import Header from '../Header'
@@ -52,8 +53,7 @@ const viewsObject = {
 
 class Jobs extends Component {
   state = {
-    typesOfEmployment: employmentTypesList,
-    typesOfSalaries: salaryRangesList,
+    currentView: viewsObject.loadingView,
     employmentType: [],
     minPackage: [],
     inputSearchValue: '',
@@ -70,6 +70,7 @@ class Jobs extends Component {
     })
 
     const {employmentType, minPackage, inputSearchValue} = this.state
+    console.log(employmentType)
     const employParameters = employmentType.join(',')
 
     const url = `https://apis.ccbp.in/jobs?employmennt_type=${employParameters}&minimum_package=${minPackage}&search=${inputSearchValue}`
@@ -100,22 +101,40 @@ class Jobs extends Component {
       }))
 
       this.setState({
+        currentView: viewsObject.successView,
         jobsData: updatedData,
+      })
+    } else {
+      this.setState({
+        currentView: viewsObject.failureView,
       })
     }
   }
 
-  onFilterSalary = event => {
-    this.setState({minPackage: event.target.value}, this.getTypesOfEmployments)
+  onFilterSalary = salary => {
+    this.setState({minPackage: salary}, this.getTypesOfEmployments)
   }
 
   onChangeEmployment = id => {
-    this.setState(
-      prevState => ({
-        employmentType: [...prevState.employmentType, id],
-      }),
-      this.getTypesOfEmployments,
-    )
+    const {employmentType} = this.state
+    const isIdExist = employmentType.includes(id)
+
+    if (isIdExist) {
+      const filteredId = employmentType.filter(employId => id !== employId)
+      this.setState(
+        {
+          employmentType: filteredId,
+        },
+        this.getTypesOfEmployments,
+      )
+    } else {
+      this.setState(
+        prevState => ({
+          employmentType: [...prevState.employmentType, id],
+        }),
+        this.getTypesOfEmployments,
+      )
+    }
   }
 
   onChangeSearchInput = event => {
@@ -138,17 +157,54 @@ class Jobs extends Component {
     const {jobsData} = this.state
 
     return (
-      <ul className="job-items">
-        {jobsData.map(obj => (
-          <JobItem jobData={obj} key={obj.id} />
-        ))}
-      </ul>
+      <div>
+        {jobsData.length === 0 ? (
+          <div className="jobs-loading-container">
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png "
+              alt="no jobs"
+              className="no-jobs-img"
+            />
+            <h1 className="no-jobs-heading">No jobs Found</h1>
+            <p className="no-jobs-para">
+              We could not find any jobs. Try other filters.
+            </p>
+          </div>
+        ) : (
+          <ul className="job-items">
+            {jobsData.map(obj => (
+              <JobItem jobData={obj} key={obj.id} />
+            ))}
+          </ul>
+        )}
+      </div>
     )
   }
 
   renderLoadingView = () => (
-    <div className="failure-view-container" data-testid="loader">
+    <div className="jobs-loading-container" data-testid="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </div>
+  )
+
+  onClickRetry = () => {
+    this.getTypesOfEmployments()
+  }
+
+  renderFailureView = () => (
+    <div className="jobs-loading-container">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure view"
+        className="no-jobs-img"
+      />
+      <h1 className="no-jobs-heading">Oops! Something went wrong</h1>
+      <p className="no-jobs-para">
+        We cannot seem to find the page you are looking for.
+      </p>
+      <button className="retry-btn" type="button" onClick={this.onClickRetry}>
+        Retry
+      </button>
     </div>
   )
 
@@ -157,7 +213,7 @@ class Jobs extends Component {
 
     switch (currentView) {
       case viewsObject.successView:
-        return this.renderSuccessView()
+        return this.renderJobItems()
       case viewsObject.failureView:
         return this.renderFailureView()
       case viewsObject.loadingView:
@@ -168,7 +224,6 @@ class Jobs extends Component {
   }
 
   render() {
-    const {typesOfEmployment, typesOfSalaries} = this.state
     return (
       <>
         <Header />
@@ -199,7 +254,7 @@ class Jobs extends Component {
             <div>
               <h1 className="employment-heading">Type of Employment</h1>
               <ul className="filter-types-options-container">
-                {typesOfEmployment.map(obj => (
+                {employmentTypesList.map(obj => (
                   <li
                     className="filter-option-container"
                     key={obj.employmentTypeId}
@@ -228,7 +283,7 @@ class Jobs extends Component {
             <div>
               <h1 className="employment-heading">Salary Range</h1>
               <div className="filter-types-options-container">
-                {typesOfSalaries.map(obj => (
+                {salaryRangesList.map(obj => (
                   <div
                     className="filter-option-container  filter-option-container-salary"
                     key={obj.salaryRangeId}
@@ -237,7 +292,7 @@ class Jobs extends Component {
                       type="radio"
                       id={obj.salaryRangeId}
                       value={obj.salaryRangeId}
-                      onChange={this.onFilterSalary}
+                      onChange={() => this.onFilterSalary(obj.salaryRangeId)}
                       name="package"
                     />
                     <label
@@ -271,7 +326,7 @@ class Jobs extends Component {
               </button>
             </div>
 
-            {this.renderJobItems()}
+            {this.renderSuccessView()}
           </div>
         </div>
       </>

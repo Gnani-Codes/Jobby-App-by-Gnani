@@ -70,6 +70,34 @@
   padding: 0px;
   margin-top: 25px;
 }
+.jobs-loading-container {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.no-jobs-img {
+  height: 200px;
+  margin-top: 100px;
+}
+.no-jobs-heading {
+  color: #ffffff;
+  font-size: 14px;
+}
+.no-jobs-para {
+  color: #ffffff;
+  font-size: 16px;
+  margin-top: 0px;
+}
+.retry-btn {
+  background-color: #4448db;
+  width: 80px;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 @media screen and (min-width: 768px) {
   .jobs-container {
@@ -96,5 +124,14 @@
   .job-items {
     overflow: auto;
     height: 110vh;
+  }
+  .jobs-loading-container {
+    height: 80vh;
+  }
+  .no-jobs-img {
+    height: 300px;
+  }
+  .no-jobs-heading {
+    font-size: 28px;
   }
 }

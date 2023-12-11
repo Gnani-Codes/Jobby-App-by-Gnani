@@ -11,6 +11,9 @@
   height: 270px;
   box-sizing: content-box;
 }
+.link {
+  text-decoration: none;
+}
 .title-container {
   display: flex;
   align-items: center;

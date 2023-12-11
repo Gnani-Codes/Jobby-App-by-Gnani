@@ -5,6 +5,7 @@ import Home from './Components/Home'
 import NotFound from './Components/NotFound'
 import ProtectedRoute from './Components/ProtectedRoute'
 import Jobs from './Components/Jobs'
+import JobItemDetails from './Components/JobItemDetails'
 
 import './App.css'
 
@@ -14,6 +15,7 @@ const App = () => (
     <ProtectedRoute exact path="/" component={Home} />
     <Route exact path="/login" component={Login} />
     <ProtectedRoute exact path="/jobs" component={Jobs} />
+    <ProtectedRoute exact path="/jobs/:id" component={JobItemDetails} />
     <Route component={NotFound} />
   </Switch>
 )
