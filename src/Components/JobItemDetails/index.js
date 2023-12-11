@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import './index.css'
+import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import {AiFillStar} from 'react-icons/ai'
 import {HiLocationMarker} from 'react-icons/hi'
@@ -44,43 +45,42 @@ class JobItemDetails extends Component {
     }
     const response = await fetch(url, options)
     const data = await response.json()
-    console.log(data, 'data')
-
-    const updatedResponseData = {
-      jobDetails: data.job_details,
-      similarJobs: data.similar_jobs,
-    }
-    const {jobDetails, similarJobs} = updatedResponseData
-    const updatedSkills = jobDetails.skills.map(obj => ({
-      imageUrl: obj.image_url,
-      name: obj.name,
-    }))
-
-    const updatedJobData = {
-      companyLogoUrl: jobDetails.company_logo_url,
-      companyWebsiteUrl: jobDetails.company_website_url,
-      employmentType: jobDetails.employment_type,
-      id: jobDetails.id,
-      jobDescription: jobDetails.job_description,
-      lifeAtCompanyDescription: jobDetails.life_at_company.description,
-      lifeAtCompanyImg: jobDetails.life_at_company.image_url,
-      location: jobDetails.location,
-      packagePerAnnum: jobDetails.package_per_annum,
-      rating: jobDetails.rating,
-      skills: updatedSkills,
-      title: jobDetails.title,
-    }
-    const updatedSimilarJobs = similarJobs.map(obj => ({
-      companyLogoUrl: obj.company_logo_url,
-      employmentType: obj.employment_type,
-      id: obj.id,
-      jobDescription: obj.job_description,
-      location: obj.location,
-      rating: obj.rating,
-      title: obj.title,
-    }))
 
     if (response.ok) {
+      const updatedResponseData = {
+        jobDetails: data.job_details,
+        similarJobs: data.similar_jobs,
+      }
+      const {jobDetails, similarJobs} = updatedResponseData
+      const updatedSkills = jobDetails.skills.map(obj => ({
+        imageUrl: obj.image_url,
+        name: obj.name,
+      }))
+
+      const updatedJobData = {
+        companyLogoUrl: jobDetails.company_logo_url,
+        companyWebsiteUrl: jobDetails.company_website_url,
+        employmentType: jobDetails.employment_type,
+        id: jobDetails.id,
+        jobDescription: jobDetails.job_description,
+        lifeAtCompanyDescription: jobDetails.life_at_company.description,
+        lifeAtCompanyImg: jobDetails.life_at_company.image_url,
+        location: jobDetails.location,
+        packagePerAnnum: jobDetails.package_per_annum,
+        rating: jobDetails.rating,
+        skills: updatedSkills,
+        title: jobDetails.title,
+      }
+      const updatedSimilarJobs = similarJobs.map(obj => ({
+        companyLogoUrl: obj.company_logo_url,
+        employmentType: obj.employment_type,
+        id: obj.id,
+        jobDescription: obj.job_description,
+        location: obj.location,
+        rating: obj.rating,
+        title: obj.title,
+      }))
+
       this.setState({
         jobItemData: updatedJobData,
         similarJobsData: updatedSimilarJobs,
@@ -96,7 +96,7 @@ class JobItemDetails extends Component {
   renderLoadingView = () => {
     console.log('loader')
     return (
-      <div className="loader-container" data-testid="loader">
+      <div className="job-details-loader-container" data-testid="loader">
         <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
       </div>
     )
@@ -198,34 +198,36 @@ class JobItemDetails extends Component {
         <ul className="similar-jobs-container">
           {similarJobsData.map(obj => (
             <li className="similar-job-item" key={obj.id}>
-              <div className="title-container">
-                <img
-                  src={obj.companyLogoUrl}
-                  alt="similar job company logo"
-                  className="logo-img"
-                />
-                <div>
-                  <h1 className="title-heading">{obj.title}</h1>
-                  <div className="rating-container">
-                    <AiFillStar className="rating-icon" />
-                    <p className="title-heading">{obj.rating}</p>
+              <Link to={`/jobs/${obj.id}`} className="link">
+                <div className="title-container">
+                  <img
+                    src={obj.companyLogoUrl}
+                    alt="similar job company logo"
+                    className="logo-img"
+                  />
+                  <div>
+                    <h1 className="title-heading">{obj.title}</h1>
+                    <div className="rating-container">
+                      <AiFillStar className="rating-icon" />
+                      <p className="title-heading">{obj.rating}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <h1 className="title-heading">Description</h1>
-              <p className="location-para">{obj.jobDescription}</p>
+                <h1 className="title-heading">Description</h1>
+                <p className="location-para">{obj.jobDescription}</p>
 
-              <div className="location-container">
                 <div className="location-container">
-                  <HiLocationMarker className="icon" />
-                  <p className="location-para">{location}</p>
+                  <div className="location-container">
+                    <HiLocationMarker className="icon" />
+                    <p className="location-para">{location}</p>
+                  </div>
+                  <div className="location-container">
+                    <MdWork className="icon" />
+                    <p className="location-para">{employmentType}</p>
+                  </div>
                 </div>
-                <div className="location-container">
-                  <MdWork className="icon" />
-                  <p className="location-para">{employmentType}</p>
-                </div>
-              </div>
+              </Link>
             </li>
           ))}
         </ul>
@@ -238,25 +240,23 @@ class JobItemDetails extends Component {
   }
 
   renderJobItemFailureView = () => (
-    <div className="no-job-view-container">
-      <div className="failure-view-display-container">
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
-          alt="failure view"
-          className="no-job-img"
-        />
-        <h1 className="no-jobs-heading">Oops! Something Went Wrong</h1>
-        <p className="no-jobs-heading">
-          We cannot seem to find the page you are looking for
-        </p>
-        <button
-          type="button"
-          className="retry-btn"
-          onClick={this.onClickRetryBtn}
-        >
-          Retry
-        </button>
-      </div>
+    <div className="job-details-failure-container">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure view"
+        className="job-details-failure-img"
+      />
+      <h1 className="no-jobs-heading">Oops! Something Went Wrong</h1>
+      <p className="no-jobs-heading">
+        We cannot seem to find the page you are looking for
+      </p>
+      <button
+        type="button"
+        className="retry-btn"
+        onClick={this.onClickRetryBtn}
+      >
+        Retry
+      </button>
     </div>
   )
 
