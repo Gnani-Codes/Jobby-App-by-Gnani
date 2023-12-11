@@ -43,9 +43,9 @@
 
 @media screen and (min-width: 767px) {
   .profile-container {
-    width: 285px;
+    width: 320px;
   }
   .failure-view-container {
-    width: 285px;
+    width: 320px;
   }
 }

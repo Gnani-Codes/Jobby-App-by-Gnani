@@ -12,7 +12,7 @@
   align-items: center;
   height: 55px;
 }
-.logo-img {
+.header-logo-img {
   height: 30px;
 }
 .header-icons-container-sm {
@@ -50,6 +50,11 @@
 }
 
 @media screen and (min-width: 768px) {
+  .header-container {
+    padding-left: 40px;
+    padding-right: 40px;
+    height: 70px;
+  }
   .header-icons-container-sm {
     display: none;
   }

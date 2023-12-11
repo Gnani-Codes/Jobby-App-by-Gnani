@@ -19,7 +19,7 @@ const Header = props => {
       <img
         src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
         alt="website logo"
-        className="logo-img"
+        className="header-logo-img"
       />
 
       <ul className="header-icons-container-sm">
