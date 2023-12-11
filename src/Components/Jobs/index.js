@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {BsSearch} from 'react-icons/bs'
 
 import './index.css'
 import Header from '../Header'
@@ -71,7 +72,9 @@ class Jobs extends Component {
     }
     const response = await fetch(url, options)
     const data = await response.json()
+    console.log(data, 'resposne')
     const {jobs} = data
+
     const updatedData = jobs.map(obj => ({
       companyLogoUrl: obj.company_logo_url,
       employmentType: obj.employment_type,
@@ -103,10 +106,18 @@ class Jobs extends Component {
   }
 
   onChangeSearchInput = event => {
+    this.setState({
+      inputSearchValue: event.target.value,
+    })
+  }
+
+  onClickSearchButton = () => {
+    this.getTypesOfEmployments()
+  }
+
+  onPressEnterKeySearch = event => {
     if (event.key === 'Enter') {
-      this.setState({
-        inputSearchValue: event.target.value,
-      })
+      this.getTypesOfEmployments()
     }
   }
 
@@ -117,15 +128,28 @@ class Jobs extends Component {
         <Header />
         <div className="jobs-container">
           <div className="filter-search-container">
-            <input
-              type="search"
-              className="search-input"
-              placeholder="Search"
-              onKeyDown={this.onChangeSearchInput}
-            />
+            <div className="search-button-container">
+              <input
+                type="search"
+                className="search-input"
+                placeholder="Search"
+                onChange={this.onChangeSearchInput}
+                onKeyDown={this.onPressEnterKeySearch}
+              />
+              <button
+                type="button"
+                data-testid="searchButton"
+                className="search-btn"
+                onClick={this.onClickSearchButton}
+              >
+                <BsSearch className="search-icon" />
+              </button>
+            </div>
+
             <ProfileCard />
 
             <hr className="hr-line" />
+
             <div>
               <h1 className="employment-heading">Type of Employment</h1>
               <ul className="filter-types-options-container">

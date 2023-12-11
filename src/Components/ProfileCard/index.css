@@ -10,6 +10,7 @@
   justify-content: center;
   padding: 30px;
   margin-top: 30px;
+  border-radius: 20px;
 }
 .profile-img {
   height: 50px;
@@ -17,9 +18,34 @@
 }
 .profile-name {
   color: #6366f1;
-  font-size: 24px;
+  font-size: 18px;
 }
 .profile-bio {
   color: #2c364c;
-  font-size: 22px;
+  font-size: 14px;
+}
+.failure-view-container {
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.retry-btn {
+  background-color: #6366f1;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: bold;
+  width: 70px;
+  height: 30px;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 767px) {
+  .profile-container {
+    width: 285px;
+  }
+  .failure-view-container {
+    width: 285px;
+  }
 }

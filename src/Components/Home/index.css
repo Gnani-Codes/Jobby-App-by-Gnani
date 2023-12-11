@@ -3,19 +3,18 @@
 }
 .home-container {
   background-image: url('https://assets.ccbp.in/frontend/react-js/home-sm-bg.png');
-  background-size: cover;
   height: 100vh;
-  padding: 30px;
-  padding-top: 100px;
+  background-size: cover;
+  padding: 20px;
 }
 .home-heading {
   color: #ffffff;
-  font-size: 28px;
+  font-size: 22px;
+  font-family: 'Open Sans';
 }
 .para {
   color: #ffffff;
-  font-size: 22px;
-  width: 60%;
+  font-size: 18px;
 }
 .find-btn {
   background-color: #4f46e5;
@@ -23,10 +22,17 @@
   padding: 10px;
   border-radius: 5px;
   font-weight: bold;
+  border: none;
+  cursor: pointer;
+  width: 100px;
 }
 
 @media screen and (min-width: 768px) {
   .home-container {
     background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
+  }
+  .para {
+    width: 60%;
+    font-size: 16px;
   }
 }

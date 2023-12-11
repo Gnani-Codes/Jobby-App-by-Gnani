@@ -9,12 +9,27 @@
   display: flex;
   flex-direction: column;
 }
+.search-button-container {
+  background: transparent;
+  border: 1px solid #64748b;
+  max-width: 767px;
+  border-radius: 7px;
+}
 .search-input {
-  border: 1ps solid #64748b;
-  border-radius: 3px;
   height: 30px;
   padding-left: 15px;
   background: transparent;
+  color: #ffffff;
+  width: 90%;
+  outline: none;
+  border: none;
+}
+.search-btn {
+  background-color: #1f1f1f;
+  border: none;
+  height: 32px;
+  width: 10%;
+  border-radius: 5px;
   color: #ffffff;
 }
 .hr-line {
