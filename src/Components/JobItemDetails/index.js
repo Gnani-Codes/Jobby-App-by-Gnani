@@ -26,6 +26,17 @@ class JobItemDetails extends Component {
     this.getJobItemDetails()
   }
 
+  componentDidUpdate(prevProps) {
+    const {id: previousId} = prevProps.match.params
+    const {match} = this.props
+    const {id: currentId} = match.params
+
+    if (currentId !== previousId) {
+      console.log('no match in ids')
+      this.getJobItemDetails()
+    }
+  }
+
   getJobItemDetails = async () => {
     this.setState({
       renderStatus: renderStatusObj.isLoader,
