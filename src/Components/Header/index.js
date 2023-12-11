@@ -2,15 +2,16 @@ import {AiFillHome} from 'react-icons/ai'
 import {MdWork} from 'react-icons/md'
 import {FaSignOutAlt} from 'react-icons/fa'
 import Cookies from 'js-cookie'
-import {Redirect, Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
 import './index.css'
 
-const Header = () => {
+const Header = props => {
   function onCLickLogOut() {
     Cookies.remove('jwt_token')
+    const {history} = props
 
-    return <Redirect to="/login" />
+    return history.replace('/login')
   }
 
   return (
@@ -54,11 +55,11 @@ const Header = () => {
           <p className="header-icons-items">Jobs</p>
         </Link>
       </div>
-      <button type="button" className="logout-btn">
+      <button type="button" className="logout-btn" onClick={onCLickLogOut}>
         Logout
       </button>
     </nav>
   )
 }
 
-export default Header
+export default withRouter(Header)

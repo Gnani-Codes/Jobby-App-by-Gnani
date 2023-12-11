@@ -1,7 +1,6 @@
 * {
   font-family: 'Roboto';
 }
-
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -43,7 +42,6 @@
   margin-right: 15px;
   font-weight: bolder;
 }
-
 .logout-btn {
   display: none;
 }

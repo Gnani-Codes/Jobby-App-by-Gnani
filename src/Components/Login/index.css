@@ -24,11 +24,14 @@
 }
 .input-element {
   border: 1px solid #64748b;
-  border-radius: 2px;
-  height: 30px;
+  border-radius: 10px;
+  height: 34px;
   padding-left: 15px;
   background-color: transparent;
   margin-bottom: 15px;
+  outline: none;
+  color: #ffffff;
+  font-weight: 500;
 }
 .label-element {
   color: #ffffff;
@@ -38,7 +41,7 @@
 .form-login-btn {
   background: #6366f1;
   color: #ffffff;
-  border-radius: 5px;
+  border-radius: 7px;
   height: 30px;
   font-weight: bold;
 }

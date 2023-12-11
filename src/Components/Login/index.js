@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie'
 import {Component} from 'react'
-import Header from '../Header'
 
 import './index.css'
 
@@ -31,7 +30,7 @@ class Login extends Component {
   }
 
   onFailure = msg => {
-    this.setState({errorMsg: msg})
+    this.setState({errorMsg: `*${msg}`})
   }
 
   onSubmitForm = async event => {
@@ -64,7 +63,6 @@ class Login extends Component {
 
     return (
       <>
-        <Header />
         <div className="login-form-container">
           <form className="form-container" onSubmit={this.onSubmitForm}>
             <img
@@ -72,6 +70,7 @@ class Login extends Component {
               alt="website logo"
               className="logo-img"
             />
+
             <div className="label-input-container">
               <label htmlFor="username" className="label-element">
                 Username
