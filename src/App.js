@@ -1,4 +1,4 @@
-import {Switch, Route, Redirect} from 'react-router-dom'
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom'
 
 import Login from './Components/Login'
 import Home from './Components/Home'
@@ -10,15 +10,27 @@ import JobItemDetails from './Components/JobItemDetails'
 import './App.css'
 
 // Replace your code here
-const App = () => (
-  <Switch>
-    <ProtectedRoute exact path="/" component={Home} />
-    <Route exact path="/login" component={Login} />
-    <ProtectedRoute exact path="/jobs" component={Jobs} />
-    <ProtectedRoute exact path="/jobs/:id" component={JobItemDetails} />
-    <Route path="/not-found" component={NotFound} />
-    <Redirect to="/not-found" />
-  </Switch>
-)
+const App = props => {
+  const {history} = props
+  const {location} = history
+  const {pathname} = location
+  console.log(pathname, 'history')
+  // can also use key={window.location.pathname}
+  return (
+    <Switch>
+      <ProtectedRoute exact path="/" component={Home} />
+      <Route exact path="/login" component={Login} />
+      <ProtectedRoute exact path="/jobs" component={Jobs} />
+      <ProtectedRoute
+        key={pathname}
+        exact
+        path="/jobs/:id"
+        component={JobItemDetails}
+      />
+      <Route path="/not-found" component={NotFound} />
+      <Redirect to="/not-found" />
+    </Switch>
+  )
+}
 
-export default App
+export default withRouter(App)
